@@ -1,8 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/beranda.dart';
 import 'sign.dart'; // Import halaman SignUpPage
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _tampil() {
+    String username = _usernameController.text;
+    String pass = _passwordController.text;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Data Akun"),
+            content: Text("Username: $username\nPassword: $pass"),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +70,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            const TextField(
+            TextField(
+              controller: _usernameController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.person),
                 labelText: 'Username',
@@ -52,7 +80,8 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const TextField(
+            TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.lock),
@@ -74,6 +103,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
+                _tampil();
                 // Aksi ketika tombol login ditekan
               },
               child: const Text('Login'),
